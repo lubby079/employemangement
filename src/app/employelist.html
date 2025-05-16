@@ -1,0 +1,85 @@
+
+<div id="particles-js"></div>
+<div class="page"> 
+<div class="container">
+    <h2>Employee List</h2>
+    <h4>Total Employees: {{ employees.length }}</h4>
+ 
+    
+    <div class="add-button">
+      <input type="text" [(ngModel)]="searchText" placeholder="Search by name..." class="search-box" />
+
+      <button routerLink="/employee-management">
+        <span style="color: white;font-size: 20px;font-weight:900;">+</span>
+        Add Employee
+      </button>
+    </div>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Role</th>
+          <th>Salary</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of filteredEmployees">
+  <td>{{ emp.name }}</td>
+  <td>{{ emp.email }}</td>
+  <td>{{ emp.department }}</td>
+  <td>{{ emp.role }}</td>
+  <td>{{ emp.salary }}</td>
+  <td>
+    <button (click)=" edit(emp)"> Edit</button>
+    <button (click)="del(emp.employeeID)">Delete</button>
+  </td>
+</tr>
+      </tbody>
+    </table>
+  
+    <div class="edit-form" *ngIf="isEditing">
+      <h3>Edit Employee</h3>
+      <form (ngSubmit)="update()" #editForm="ngForm">
+        <div class="form-group">
+          <label>Name:</label>
+          <input type="text" [(ngModel)]="employeeForm.name" name="name" required />
+        </div>
+  
+        <div class="form-group">
+          <label>Email:</label>
+          <input type="email" [(ngModel)]="employeeForm.email" name="email" required />
+        </div>
+  
+        <div class="form-group">
+          <label>Department:</label>
+          <select [(ngModel)]="employeeForm.department" name="department" required>
+            <option value="" disabled>Select Department</option>
+            <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label>Role:</label>
+          <select [(ngModel)]="employeeForm.role" name="role" required>
+            <option value="" disabled>Select Role</option>
+            <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label>Salary:</label>
+          <input type="number" [(ngModel)]="employeeForm.salary" name="salary" required />
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit"> Save</button>
+          <button type="button" (click)="reset()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
